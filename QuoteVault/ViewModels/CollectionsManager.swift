@@ -18,7 +18,19 @@ class CollectionsManager: ObservableObject {
     static let shared = CollectionsManager()
     private let collectionService = CollectionService.shared
     
-    private init() {}
+    private var cancellables = Set<AnyCancellable>()
+    
+    private init() {
+        // Listen to profile changes to load collections
+        AuthService.shared.$currentProfile
+            .compactMap { $0 }
+            .sink { [weak self] _ in
+                Task {
+                    await self?.loadCollections()
+                }
+            }
+            .store(in: &cancellables)
+    }
     
     func loadCollections() async {
         guard let userId = AuthService.shared.currentUser?.id else { return }

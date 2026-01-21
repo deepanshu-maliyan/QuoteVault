@@ -14,20 +14,13 @@ struct SavedView: View {
         NavigationStack {
             VStack(spacing: 0) {
                 // Header with Segmented Control
-                VStack(spacing: AppSpacing.md) {
-                    HStack {
-                        Text("My Collections")
-                            .font(AppFont.bold(28))
-                            .foregroundColor(.primaryText)
-                        
-                        Spacer()
-                        
-                        Button {
-                            // Add new collection
-                        } label: {
-                            Image(systemName: "plus")
-                                .font(.system(size: 20, weight: .semibold))
-                                .foregroundColor(AppStateManager.shared.accentColor.color)
+                    VStack(spacing: AppSpacing.md) {
+                        HStack {
+                            Text("My Collections")
+                                .font(AppFont.bold(28))
+                                .foregroundColor(.primaryText)
+                            
+                            Spacer()
                         }
                     }
                     
@@ -163,30 +156,6 @@ struct CollectionsGridView: View {
             } else {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: AppSpacing.md) {
-                        // New Collection Button
-                        Button {
-                            showNewCollectionSheet = true
-                        } label: {
-                            VStack {
-                                Image(systemName: "plus")
-                                    .font(.system(size: 30))
-                                    .foregroundColor(.secondaryText)
-                                
-                                Text("New Collection")
-                                    .font(AppFont.medium(14))
-                                    .foregroundColor(.secondaryText)
-                            }
-                            .frame(height: 160)
-                            .frame(maxWidth: .infinity)
-                            .background(
-                                RoundedRectangle(cornerRadius: AppRadius.lg)
-                                    .strokeBorder(
-                                        style: StrokeStyle(lineWidth: 2, dash: [8])
-                                    )
-                                    .foregroundColor(.gray.opacity(0.3))
-                            )
-                        }
-                        
                         // Collections
                         ForEach(collectionsManager.collections) { collection in
                             CollectionCard(collection: collection)

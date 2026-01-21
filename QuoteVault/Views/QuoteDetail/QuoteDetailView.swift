@@ -239,10 +239,45 @@ struct AddToCollectionSheet: View {
     let onAdd: (UUID) -> Void
     
     @Environment(\.dismiss) private var dismiss
+    @StateObject private var collectionsManager = CollectionsManager.shared
+    @State private var showNewField = false
+    @State private var newName = ""
+    
+    private func createAndAdd() {
+        guard !newName.isEmpty else { return }
+        Task {
+            if let newId = await collectionsManager.createCollection(name: newName) {
+                onAdd(newId)
+            }
+        }
+    }
     
     var body: some View {
         NavigationStack {
             List {
+                // New Collection Input (Inline)
+                if showNewField {
+                    HStack {
+                        Image(systemName: "folder.badge.plus")
+                            .foregroundColor(AppStateManager.shared.accentColor.color)
+                        
+                        TextField("Collection name", text: $newName)
+                            .font(AppFont.medium(16))
+                            .autocorrectionDisabled()
+                        
+                        Button {
+                            createAndAdd()
+                        } label: {
+                            Text("Create")
+                                .font(AppFont.bold(14))
+                                .foregroundColor(AppStateManager.shared.accentColor.color)
+                        }
+                        .disabled(newName.isEmpty)
+                    }
+                    .padding(.vertical, AppSpacing.xs)
+                    .transition(.move(edge: .top).combined(with: .opacity))
+                }
+                
                 ForEach(collections) { collection in
                     Button {
                         onAdd(collection.id)
@@ -275,6 +310,17 @@ struct AddToCollectionSheet: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
                         dismiss()
+                    }
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        withAnimation(.spring()) {
+                            showNewField.toggle()
+                        }
+                    } label: {
+                        Image(systemName: showNewField ? "minus.circle" : "plus.circle")
+                            .font(.system(size: 20))
                     }
                 }
             }
