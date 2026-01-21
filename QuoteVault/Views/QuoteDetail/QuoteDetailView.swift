@@ -77,6 +77,7 @@ struct QuoteDetailView: View {
                     
                     // Create Card
                     ActionButton(icon: "rectangle.portrait.on.rectangle.portrait", label: "Card") {
+                        HapticManager.shared.trigger(.light)
                         showCardCreator = true
                     }
                     
@@ -84,6 +85,7 @@ struct QuoteDetailView: View {
                     
                     // Save Quote
                     Button {
+                        HapticManager.shared.trigger(.medium)
                         showAddToCollection = true
                     } label: {
                         HStack(spacing: AppSpacing.sm) {
@@ -98,6 +100,8 @@ struct QuoteDetailView: View {
                             RoundedRectangle(cornerRadius: AppRadius.md)
                                 .fill(AppStateManager.shared.accentColor.color)
                         )
+                        .scaleEffect(showAddToCollection ? 0.95 : 1.0)
+                        .animation(.spring(), value: showAddToCollection)
                     }
                 }
             }
@@ -212,7 +216,10 @@ struct ActionButton: View {
     let action: () -> Void
     
     var body: some View {
-        Button(action: action) {
+        Button(action: {
+            HapticManager.shared.trigger(.light)
+            action()
+        }) {
             VStack(spacing: AppSpacing.xs) {
                 Image(systemName: icon)
                     .font(.system(size: 20))
@@ -221,6 +228,7 @@ struct ActionButton: View {
             }
             .foregroundColor(.secondaryText)
         }
+        .buttonStyle(.plain)
     }
 }
 

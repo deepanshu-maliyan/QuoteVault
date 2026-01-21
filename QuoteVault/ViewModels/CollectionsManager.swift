@@ -10,6 +10,7 @@ import Combine
 
 class CollectionsManager: ObservableObject {
     @Published var collections: [CollectionWithCount] = []
+    @Published var collectionQuotes: [QuoteWithCategory] = []
     @Published var isLoading = false
     @Published var error: String?
     
@@ -49,6 +50,16 @@ class CollectionsManager: ObservableObject {
         }
     }
     
+    func loadCollectionQuotes(collectionId: UUID) async {
+        isLoading = true
+        do {
+            self.collectionQuotes = try await collectionService.fetchCollectionQuotes(collectionId: collectionId)
+        } catch {
+            self.error = error.localizedDescription
+        }
+        isLoading = false
+    }
+    
     func addQuote(quoteId: UUID, collectionId: UUID) async {
         do {
             try await collectionService.addQuoteToCollection(quoteId: quoteId, collectionId: collectionId)
@@ -59,6 +70,27 @@ class CollectionsManager: ObservableObject {
                     collections[index] = updated
                     HapticManager.shared.trigger(.success)
                 }
+            }
+        } catch {
+            await MainActor.run {
+                self.error = error.localizedDescription
+            }
+        }
+    }
+    
+    func removeQuote(quoteId: UUID, collectionId: UUID) async {
+        do {
+            try await collectionService.removeQuoteFromCollection(quoteId: quoteId, collectionId: collectionId)
+            await MainActor.run {
+                // Update quote count in collections list
+                if let index = collections.firstIndex(where: { $0.id == collectionId }) {
+                    var updated = collections[index]
+                    updated.quoteCount = max(0, updated.quoteCount - 1)
+                    collections[index] = updated
+                }
+                // Remove from current collection quotes view
+                collectionQuotes.removeAll { $0.id == quoteId }
+                HapticManager.shared.trigger(.light)
             }
         } catch {
             await MainActor.run {

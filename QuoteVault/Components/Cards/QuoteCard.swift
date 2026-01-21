@@ -27,11 +27,14 @@ struct QuoteCard: View {
                     Spacer()
                     
                     Button {
+                        HapticManager.shared.trigger(.selection)
                         onFavoriteToggle?()
                     } label: {
                         Image(systemName: isFavorite ? "heart.fill" : "heart")
                             .font(.system(size: 18))
                             .foregroundColor(isFavorite ? .red : .secondaryText)
+                            .scaleEffect(isFavorite ? 1.2 : 1.0)
+                            .animation(.spring(response: 0.3, dampingFraction: 0.5), value: isFavorite)
                     }
                     .buttonStyle(.plain)
                 }
@@ -145,14 +148,17 @@ struct QuoteOfDayCard: View {
             HStack(spacing: AppSpacing.lg) {
                 // Like Button
                 Button {
+                    HapticManager.shared.trigger(.selection)
                     onFavoriteToggle?()
                 } label: {
                     HStack(spacing: AppSpacing.xs) {
                         Image(systemName: isFavorite ? "heart.fill" : "heart")
+                            .scaleEffect(isFavorite ? 1.2 : 1.0)
                         Text("\(quote.likesCount > 0 ? formatNumber(quote.likesCount) : "")")
                     }
                     .font(AppFont.medium(14))
                     .foregroundColor(.white)
+                    .animation(.spring(response: 0.3, dampingFraction: 0.5), value: isFavorite)
                 }
                 
                 // Comments

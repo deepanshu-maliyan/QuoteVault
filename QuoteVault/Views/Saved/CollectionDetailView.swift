@@ -10,7 +10,6 @@ import SwiftUI
 struct CollectionDetailView: View {
     let collection: CollectionWithCount
     
-    @StateObject private var viewModel = CollectionsViewModel()
     @StateObject private var collectionsManager = CollectionsManager.shared
     @Environment(\.dismiss) private var dismiss
     @State private var selectedQuote: QuoteWithCategory?
@@ -21,9 +20,9 @@ struct CollectionDetailView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            if viewModel.isLoading {
+            if collectionsManager.isLoading {
                 LoadingView()
-            } else if viewModel.collectionQuotes.isEmpty {
+            } else if collectionsManager.collectionQuotes.isEmpty {
                 EmptyStateView(
                     icon: "folder",
                     title: "Empty Collection",
@@ -32,7 +31,7 @@ struct CollectionDetailView: View {
             } else {
                 ScrollView {
                     LazyVStack(spacing: AppSpacing.md) {
-                        ForEach(viewModel.collectionQuotes) { quote in
+                        ForEach(collectionsManager.collectionQuotes) { quote in
                             QuoteCard(
                                 quote: quote,
                                 onTap: {
@@ -43,7 +42,7 @@ struct CollectionDetailView: View {
                             .swipeActions(edge: .trailing) {
                                 Button(role: .destructive) {
                                     Task {
-                                        await viewModel.removeQuoteFromCollection(
+                                        await collectionsManager.removeQuote(
                                             quoteId: quote.id,
                                             collectionId: collection.id
                                         )
@@ -82,7 +81,7 @@ struct CollectionDetailView: View {
             }
         }
         .task {
-            await viewModel.loadCollectionQuotes(collectionId: collection.id)
+            await collectionsManager.loadCollectionQuotes(collectionId: collection.id)
         }
         .navigationDestination(isPresented: $showQuoteDetail) {
             if let quote = selectedQuote {

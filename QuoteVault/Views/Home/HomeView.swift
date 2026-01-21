@@ -221,9 +221,13 @@ struct CategoryPillButton: View {
     let icon: String
     let isSelected: Bool
     let action: () -> Void
+    @EnvironmentObject var stateManager: AppStateManager
     
     var body: some View {
-        Button(action: action) {
+        Button {
+            HapticManager.shared.trigger(.selection)
+            action()
+        } label: {
             HStack(spacing: AppSpacing.xs) {
                 Image(systemName: icon)
                     .font(.system(size: 12))
@@ -235,9 +239,12 @@ struct CategoryPillButton: View {
             .padding(.vertical, AppSpacing.sm)
             .background(
                 Capsule()
-                    .fill(isSelected ? AppStateManager.shared.accentColor.color : Color.secondaryBackground)
+                    .fill(isSelected ? stateManager.accentColor.color : Color.secondaryBackground)
             )
+            .scaleEffect(isSelected ? 1.05 : 1.0)
+            .animation(.spring(response: 0.3, dampingFraction: 0.6), value: isSelected)
         }
+        .buttonStyle(.plain)
     }
 }
 
