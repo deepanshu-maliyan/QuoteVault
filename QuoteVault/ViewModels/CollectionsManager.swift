@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 
+@MainActor
 class CollectionsManager: ObservableObject {
     @Published var collections: [CollectionWithCount] = []
     @Published var collectionQuotes: [QuoteWithCategory] = []

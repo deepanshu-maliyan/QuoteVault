@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 
+@MainActor
 class AppStateManager: ObservableObject {
     @Published var themeMode: ThemeMode = .auto
     @Published var accentColor: AppColor = .blue

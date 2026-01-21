@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@MainActor
 class NavigationManager: ObservableObject {
     @Published var selectedTab: Int = 0
     
