@@ -15,7 +15,7 @@ struct SavedView: View {
         NavigationStack {
             VStack(spacing: 0) {
                 // Header with Segmented Control
-                VStack(spacing: AppSpacing.lg) { // Increased spacing from md to lg
+                VStack(spacing: 32) { // Increased spacing for more breathing room
                     HStack {
                         Text("My Collections")
                             .font(AppFont.bold(28))
