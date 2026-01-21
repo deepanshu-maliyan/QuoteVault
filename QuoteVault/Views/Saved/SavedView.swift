@@ -59,7 +59,7 @@ struct SavedView: View {
             .background(Color.appBackground)
         }
     }
-}
+
 
 // MARK: - Segment Button
 struct SegmentButton: View {
