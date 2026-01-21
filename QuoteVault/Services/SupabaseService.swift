@@ -7,6 +7,7 @@
 
 import Foundation
 import Supabase
+import Auth
 
 // MARK: - Supabase Client Singleton
 @MainActor
