@@ -29,6 +29,7 @@ struct RootView: View {
         .preferredColorScheme(stateManager.themeMode.colorScheme)
         .tint(stateManager.accentColor.color)
         .accentColor(stateManager.accentColor.color)
+        .environmentObject(stateManager)
     }
 }
 
