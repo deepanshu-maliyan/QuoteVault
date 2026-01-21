@@ -240,8 +240,12 @@ struct ShareCardCreatorView: View {
     
     @MainActor
     private func shareCard() {
-        let renderer = ImageRenderer(content: ShareCardView(quote: quote, style: selectedStyle).frame(width: 400, height: 500))
-        renderer.scale = 3.0
+        // Create a dedicated container for rendering to ensure consistent style and size
+        let renderView = ShareCardView(quote: quote, style: selectedStyle)
+            .frame(width: 400, height: 500)
+        
+        let renderer = ImageRenderer(content: renderView)
+        renderer.scale = UIScreen.main.scale // Use device scale for better quality
         
         if let image = renderer.uiImage {
             let activityVC = UIActivityViewController(
@@ -249,11 +253,21 @@ struct ShareCardCreatorView: View {
                 applicationActivities: nil
             )
             
+            // For iPad compatibility
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                let window = windowScene.windows.first,
                let rootVC = window.rootViewController {
+                
+                if let popover = activityVC.popoverPresentationController {
+                    popover.sourceView = window
+                    popover.sourceRect = CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY, width: 0, height: 0)
+                    popover.permittedArrowDirections = []
+                }
+                
                 rootVC.present(activityVC, animated: true)
             }
+        } else {
+            print("Failed to render image for sharing")
         }
     }
 }
@@ -293,10 +307,11 @@ struct ShareCardView: View {
                 
                 // Quote Text
                 Text("\"\(quote.text)\"")
-                    .font(.system(size: 22, weight: .medium, design: .serif))
+                    .font(.system(size: 24, weight: .medium, design: .serif))
                     .foregroundColor(style.textColor)
                     .multilineTextAlignment(.center)
                     .lineSpacing(6)
+                    .minimumScaleFactor(0.5)
                     .padding(.horizontal, AppSpacing.lg)
                 
                 // Author

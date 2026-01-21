@@ -43,7 +43,7 @@ struct QuoteCard: View {
                 Text("\"\(quote.text)\"")
                     .font(AppFont.quoteFont(16))
                     .foregroundColor(.primaryText)
-                    .lineLimit(4)
+                    .minimumScaleFactor(0.8)
                     .multilineTextAlignment(.leading)
                 
                 // Author
@@ -130,7 +130,7 @@ struct QuoteOfDayCard: View {
                 .font(.system(size: 22, weight: .medium, design: .serif))
                 .italic()
                 .foregroundColor(.white)
-                .lineLimit(4)
+                .minimumScaleFactor(0.7)
             
             // Divider
             Rectangle()
@@ -193,7 +193,7 @@ struct QuoteOfDayCard: View {
             }
         }
         .padding(AppSpacing.lg)
-        .frame(height: 280)
+        .frame(minHeight: 280)
         .background(
             RoundedRectangle(cornerRadius: AppRadius.xl)
                 .fill(

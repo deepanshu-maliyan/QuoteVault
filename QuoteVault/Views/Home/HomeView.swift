@@ -54,30 +54,17 @@ struct HomeView: View {
     // MARK: - Header Section
     private var headerSection: some View {
         HStack {
-            VStack(alignment: .leading, spacing: AppSpacing.xs) {
-                Text("Daily Inspiration")
-                    .font(AppFont.regular(12))
+            HStack(alignment: .firstTextBaseline, spacing: AppSpacing.xs) {
+                Text(viewModel.getGreeting())
+                    .font(AppFont.medium(16))
                     .foregroundColor(.secondaryText)
                 
-                Text("\(viewModel.getGreeting()), \(viewModel.getUserDisplayName())")
+                Text(viewModel.getUserDisplayName())
                     .font(AppFont.bold(24))
                     .foregroundColor(.primaryText)
             }
             
             Spacer()
-            
-            AvatarView(
-                imageUrl: authService.currentProfile?.avatarUrl,
-                name: viewModel.getUserDisplayName(),
-                size: 44
-            )
-            .overlay(
-                Circle()
-                    .fill(Color.green)
-                    .frame(width: 12, height: 12)
-                    .offset(x: 2, y: 2),
-                alignment: .bottomTrailing
-            )
         }
         .padding(.top, AppSpacing.md)
     }
@@ -277,7 +264,7 @@ struct RecommendedQuoteCard: View {
             Text("\"\(quote.text)\"")
                 .font(AppFont.medium(14))
                 .foregroundColor(.primaryText)
-                .lineLimit(4)
+                .minimumScaleFactor(0.8)
                 .multilineTextAlignment(.leading)
             
             Spacer()
