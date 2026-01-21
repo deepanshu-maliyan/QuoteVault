@@ -95,16 +95,12 @@ struct QuoteVaultWidget: Widget {
     }
 }
 
-#Preview(as: .systemSmall) {
+#Preview(as: WidgetFamily.systemSmall) {
     QuoteVaultWidget()
-} displayName: {
-    "Small Widget"
 }
 
-#Preview(as: .systemMedium) {
+#Preview(as: WidgetFamily.systemMedium) {
     QuoteVaultWidget()
-} displayName: {
-    "Medium Widget"
 }
 
 // Color Hex Extension for Widget
