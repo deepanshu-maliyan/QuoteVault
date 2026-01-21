@@ -95,12 +95,16 @@ struct QuoteVaultWidget: Widget {
     }
 }
 
-#Preview(as: WidgetFamily.systemSmall) {
+#Preview(as: .systemSmall) {
     QuoteVaultWidget()
+} timeline: {
+    SimpleEntry(date: .now, quote: "Believe you can and you're halfway there.", author: "Theodore Roosevelt")
 }
 
-#Preview(as: WidgetFamily.systemMedium) {
+#Preview(as: .systemMedium) {
     QuoteVaultWidget()
+} timeline: {
+    SimpleEntry(date: .now, quote: "Believe you can and you're halfway there.", author: "Theodore Roosevelt")
 }
 
 // Color Hex Extension for Widget
