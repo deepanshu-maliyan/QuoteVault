@@ -6,6 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1FF378B42F210214001212CF /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 1FF378B32F210214001212CF /* Auth */; };
+		1FF378B62F210214001212CF /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = 1FF378B52F210214001212CF /* Functions */; };
+		1FF378B82F210214001212CF /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = 1FF378B72F210214001212CF /* PostgREST */; };
+		1FF378BA2F210214001212CF /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = 1FF378B92F210214001212CF /* Realtime */; };
+		1FF378BC2F210214001212CF /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 1FF378BB2F210214001212CF /* Storage */; };
+		1FF378BE2F210214001212CF /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 1FF378BD2F210214001212CF /* Supabase */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		1FF3786B2F20FD51001212CF /* QuoteVault.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuoteVault.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +32,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FF378B82F210214001212CF /* PostgREST in Frameworks */,
+				1FF378B62F210214001212CF /* Functions in Frameworks */,
+				1FF378BE2F210214001212CF /* Supabase in Frameworks */,
+				1FF378B42F210214001212CF /* Auth in Frameworks */,
+				1FF378BC2F210214001212CF /* Storage in Frameworks */,
+				1FF378BA2F210214001212CF /* Realtime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +80,12 @@
 			);
 			name = QuoteVault;
 			packageProductDependencies = (
+				1FF378B32F210214001212CF /* Auth */,
+				1FF378B52F210214001212CF /* Functions */,
+				1FF378B72F210214001212CF /* PostgREST */,
+				1FF378B92F210214001212CF /* Realtime */,
+				1FF378BB2F210214001212CF /* Storage */,
+				1FF378BD2F210214001212CF /* Supabase */,
 			);
 			productName = QuoteVault;
 			productReference = 1FF3786B2F20FD51001212CF /* QuoteVault.app */;
@@ -94,6 +115,9 @@
 			);
 			mainGroup = 1FF378622F20FD51001212CF;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				1FF378B22F210214001212CF /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1FF3786C2F20FD51001212CF /* Products */;
 			projectDirPath = "";
@@ -256,6 +280,7 @@
 				DEVELOPMENT_TEAM = M5UJRHSQ86;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "QuoteVault needs permission to save quote cards to your photo library.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -284,6 +309,7 @@
 				DEVELOPMENT_TEAM = M5UJRHSQ86;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "QuoteVault needs permission to save quote cards to your photo library.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -324,6 +350,50 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1FF378B22F210214001212CF /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1FF378B32F210214001212CF /* Auth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FF378B22F210214001212CF /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Auth;
+		};
+		1FF378B52F210214001212CF /* Functions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FF378B22F210214001212CF /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Functions;
+		};
+		1FF378B72F210214001212CF /* PostgREST */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FF378B22F210214001212CF /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = PostgREST;
+		};
+		1FF378B92F210214001212CF /* Realtime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FF378B22F210214001212CF /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Realtime;
+		};
+		1FF378BB2F210214001212CF /* Storage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FF378B22F210214001212CF /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Storage;
+		};
+		1FF378BD2F210214001212CF /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FF378B22F210214001212CF /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1FF378632F20FD51001212CF /* Project object */;
 }
