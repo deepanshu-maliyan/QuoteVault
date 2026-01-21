@@ -54,13 +54,13 @@ struct HomeView: View {
     // MARK: - Header Section
     private var headerSection: some View {
         HStack {
-            HStack(alignment: .firstTextBaseline, spacing: AppSpacing.xs) {
+            HStack(alignment: .firstTextBaseline, spacing: AppSpacing.sm) {
                 Text(viewModel.getGreeting())
-                    .font(AppFont.medium(16))
+                    .font(AppFont.medium(14))
                     .foregroundColor(.secondaryText)
                 
                 Text(viewModel.getUserDisplayName())
-                    .font(AppFont.bold(24))
+                    .font(AppFont.bold(26))
                     .foregroundColor(.primaryText)
             }
             

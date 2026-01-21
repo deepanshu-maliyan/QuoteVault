@@ -9,20 +9,29 @@ import SwiftUI
 
 struct SavedView: View {
     @State private var selectedTab = 0
+    @State private var showNewCollectionSheet = false
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
                 // Header with Segmented Control
-                    VStack(spacing: AppSpacing.md) {
-                        HStack {
-                            Text("My Collections")
-                                .font(AppFont.bold(28))
-                                .foregroundColor(.primaryText)
-                            
-                            Spacer()
+                VStack(spacing: AppSpacing.lg) { // Increased spacing from md to lg
+                    HStack {
+                        Text("My Collections")
+                            .font(AppFont.bold(28))
+                            .foregroundColor(.primaryText)
+                        
+                        Spacer()
+                        
+                        Button {
+                            showNewCollectionSheet = true
+                        } label: {
+                            Image(systemName: "plus.circle.fill")
+                                .font(.system(size: 24))
+                                .foregroundColor(AppStateManager.shared.accentColor.color)
                         }
                     }
+                }
                     
                     // Segmented Control
                     HStack(spacing: 0) {
@@ -51,7 +60,7 @@ struct SavedView: View {
                     FavoritesListView()
                         .tag(0)
                     
-                    CollectionsGridView()
+                    CollectionsGridView(showNewCollectionSheet: $showNewCollectionSheet)
                         .tag(1)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
@@ -140,7 +149,7 @@ struct FavoritesListView: View {
 // MARK: - Collections Grid View
 struct CollectionsGridView: View {
     @StateObject private var collectionsManager = CollectionsManager.shared
-    @State private var showNewCollectionSheet = false
+    @Binding var showNewCollectionSheet: Bool
     @State private var newCollectionName = ""
     @State private var selectedCollection: CollectionWithCount?
     
@@ -156,6 +165,30 @@ struct CollectionsGridView: View {
             } else {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: AppSpacing.md) {
+                        // New Collection Button
+                        Button {
+                            showNewCollectionSheet = true
+                        } label: {
+                            VStack {
+                                Image(systemName: "plus")
+                                    .font(.system(size: 30))
+                                    .foregroundColor(.secondaryText)
+                                
+                                Text("New Collection")
+                                    .font(AppFont.medium(14))
+                                    .foregroundColor(.secondaryText)
+                            }
+                            .frame(height: 160)
+                            .frame(maxWidth: .infinity)
+                            .background(
+                                RoundedRectangle(cornerRadius: AppRadius.lg)
+                                    .strokeBorder(
+                                        style: StrokeStyle(lineWidth: 2, dash: [8])
+                                    )
+                                    .foregroundColor(.gray.opacity(0.3))
+                            )
+                        }
+                        
                         // Collections
                         ForEach(collectionsManager.collections) { collection in
                             CollectionCard(collection: collection)
