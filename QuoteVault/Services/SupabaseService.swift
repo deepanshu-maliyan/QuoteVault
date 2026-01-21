@@ -21,7 +21,7 @@ final class SupabaseService {
             supabaseURL: URL(string: Constants.Supabase.url)!,
             supabaseKey: Constants.Supabase.anonKey,
             options: SupabaseClientOptions(
-                auth: AuthClientOptions(
+                auth: .init(
                     emitLocalSessionAsInitialSession: true
                 )
             )
