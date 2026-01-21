@@ -27,7 +27,8 @@ struct RootView: View {
         }
         .animation(.easeInOut, value: authService.isAuthenticated)
         .preferredColorScheme(stateManager.themeMode.colorScheme)
-        .environment(\.accentColor, stateManager.accentColor.color)
+        .tint(stateManager.accentColor.color)
+        .accentColor(stateManager.accentColor.color)
     }
 }
 
